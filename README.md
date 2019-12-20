@@ -1,2 +1,2 @@
-# zaim-api
-ZaimのREST APIのラッパーバッケージ
+# pyzaim
+ZaimのREST APIのPythonラッパーパッケージ
