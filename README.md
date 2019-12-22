@@ -84,4 +84,7 @@ clawler = ZaimCrawler('Chrome Driverのパス', 'ログインID', 'ログイン�
 
 # データの取得 (データの取得には少し時間がかかります、時間はデータ件数による)
 data = crawler.get_data('取得する年(int)', '取得する月(int)')
+
+# 終了処理
+crawler.close()
 ```
