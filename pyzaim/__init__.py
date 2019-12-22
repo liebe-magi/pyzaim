@@ -1,1 +1,1 @@
-from .pyzaim import ZaimApi, get_access_token
+from .pyzaim import ZaimAPI, get_access_token, ZaimCrawler

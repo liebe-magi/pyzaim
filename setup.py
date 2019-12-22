@@ -15,17 +15,17 @@ setup(
 
     license='MIT',
 
-    install_requires=['requests_oauthlib'],
+    install_requires=['requests_oauthlib', 'selenium', 'reelib'],
 
     author='reeve0930',
     author_email='reeve0930@gmail.com',
 
     url='https://github.com/reeve0930/pyzaim',
 
-    description='ZaimのREST APIのPythonラッパーパッケージ',
+    description='Zaimのデータを取得・操作するPythonパッケージ',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    keywords='zaim auth rest api', 
+    keywords='zaim oauth rest api selenium chromedriver', 
 
     classifiers=[
         'License :: OSI Approved :: MIT License',
