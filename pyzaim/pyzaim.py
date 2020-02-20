@@ -4,6 +4,7 @@ import time
 from requests_oauthlib import OAuth1Session
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.keys import Keys
+from tqdm import tqdm
 
 request_token_url = "https://api.zaim.net/v2/auth/request"
 authorize_url = "https://auth.zaim.net/users/auth"
@@ -356,7 +357,7 @@ class ZaimCrawler:
         time.sleep(1)
         print("Login Success.")
 
-    def get_data(self, year, month):
+    def get_data(self, year, month, progress=True):
         month = str(month).zfill(2)
         print("Get Data of {}/{}.".format(year, month))
         self.driver.get("https://zaim.net/money?month={}{}".format(year, month))
@@ -366,6 +367,8 @@ class ZaimCrawler:
         lines = table.find_elements_by_tag_name("tr")
 
         print("Found {} data.".format(len(lines)))
+        if progress:
+            pbar = tqdm(total=len(lines))
 
         data = []
         for line in reversed(lines):
@@ -391,7 +394,9 @@ class ZaimCrawler:
                 .split("（")[0]
             )
             date = items[2].text.split("（")[0]
-            item["date"] = datetime.datetime.strptime("{}年{}".format(year, date), "%Y年%m月%d日")
+            item["date"] = datetime.datetime.strptime(
+                "{}年{}".format(year, date), "%Y年%m月%d日"
+            )
             item["category"] = (
                 items[3].find_element_by_tag_name("span").get_attribute("data-title")
             )
@@ -413,6 +418,10 @@ class ZaimCrawler:
                 items[9].find_element_by_tag_name("span").get_attribute("title")
             )
             data.append(item)
+            if progress:
+                pbar.update(1)
+        if progress:
+            pbar.close()
         return data
 
     def close(self):
