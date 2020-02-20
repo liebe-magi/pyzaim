@@ -1,9 +1,17 @@
 [tool.poetry]
 name = "pyzaim"
-version = "1.0.0"
+version = "1.0.1"
 description = "Zaimのデータを取得・操作するPythonパッケージ"
 authors = ["reeve0930 <reeve0930@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/reeve0930/pyzaim"
+keywords = ["zaim", "oauth", "rest api", "selenium", "chromedriver"] 
+classifiers=[
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.7"
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.7"
