@@ -96,7 +96,7 @@ class ZaimAPI:
         else:
             from_account_id = None
         return self.insert_payment(
-            date, category_id, genre_id, amount, from_account_id, comment, name, place
+            date, amount, category_id, genre_id, from_account_id, comment, name, place
         )
 
     def insert_payment(
