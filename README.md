@@ -80,8 +80,9 @@ api.delete_payment('削除対象のデータのID')
 from pyzaim import ZaimCrawler
 
 # Chrome Driverの起動とZaimへのログイン、ログインには少し時間がかかります
-clawler = ZaimCrawler('Chrome Driverのパス', 'ログインID', 'ログインパスワード',
-                      headless=False) # headlessをTrueにするとブラウザを表示できる
+clawler = ZaimCrawler('ログインID', 'ログインパスワード', 
+                    driver_path='Chrome Driverのパス'(PATHが通っていれば省略可),
+                    headless=False) # headlessをTrueにするとブラウザを表示できる
 
 # データの取得 (データの取得には少し時間がかかります、時間はデータ件数による)
 data = crawler.get_data('取得する年(int)', '取得する月(int)', progress=True) # progressをFalseにするとプログレスバーを非表示にできる

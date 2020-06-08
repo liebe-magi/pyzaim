@@ -341,11 +341,14 @@ class ZaimAPI:
 
 
 class ZaimCrawler:
-    def __init__(self, driver_path, user_id, password, headless=False):
+    def __init__(self, user_id, password, driver_path=None, headless=False):
         options = ChromeOptions()
         if headless:
             options.add_argument("--headless")
-        self.driver = Chrome(driver_path, options=options)
+        if driver_path is not None:
+            self.driver = Chrome(executable_path=driver_path, options=options)
+        else:
+            self.driver = Chrome(options=options)
         print("Start Chrome Driver.")
         print("Login to Zaim.")
 

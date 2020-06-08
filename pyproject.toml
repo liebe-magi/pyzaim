@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyzaim"
-version = "1.0.2"
+version = "1.0.3"
 description = "Zaimのデータを取得・操作するPythonパッケージ"
 authors = ["reeve0930 <reeve0930@gmail.com>"]
 license = "MIT"
