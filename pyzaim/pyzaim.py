@@ -343,6 +343,8 @@ class ZaimAPI:
 class ZaimCrawler:
     def __init__(self, user_id, password, driver_path=None, headless=False):
         options = ChromeOptions()
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
         if headless:
             options.add_argument("--headless")
         if driver_path is not None:
