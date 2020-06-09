@@ -341,19 +341,22 @@ class ZaimAPI:
 
 
 class ZaimCrawler:
-    def __init__(self, user_id, password, driver_path=None, headless=False):
+    def __init__(self, user_id, password, driver_path=None, headless=False, poor=False):
         options = ChromeOptions()
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--remote-debugging-port=9222')
+        if poor:
+            options.add_argument("--disable-gpu")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--remote-debugging-port=9222")
+            options.add_argument("--headless")
         if headless:
             options.add_argument("--headless")
         if driver_path is not None:
             self.driver = Chrome(executable_path=driver_path, options=options)
         else:
             self.driver = Chrome(options=options)
-        self.driver.set_window_size(640, 480)
+        if poor:
+            self.driver.set_window_size(480, 270)
         print("Start Chrome Driver.")
         print("Login to Zaim.")
 
