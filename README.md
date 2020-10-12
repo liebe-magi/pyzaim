@@ -32,7 +32,7 @@ pip install pyzaim
 - アクセストークンの発行
 
 ```python
-from pyzaim import get_access_token()
+from pyzaim import get_access_token
 
 get_access_token()
 
@@ -80,7 +80,7 @@ api.delete_payment('削除対象のデータのID')
 from pyzaim import ZaimCrawler
 
 # Chrome Driverの起動とZaimへのログイン、ログインには少し時間がかかります
-clawler = ZaimCrawler('ログインID', 'ログインパスワード', 
+crawler = ZaimCrawler('ログインID', 'ログインパスワード',
                     driver_path='Chrome Driverのパス'(PATHが通っていれば省略可),
                     headless=False) # headlessをTrueにするとブラウザを表示できる
 
