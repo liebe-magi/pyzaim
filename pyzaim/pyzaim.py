@@ -374,8 +374,8 @@ class ZaimCrawler:
         self.driver.get("https://zaim.net/money?month={}{}".format(year, month))
         time.sleep(1)
 
-        table = self.driver.find_element_by_class_name("money-list")
-        lines = table.find_elements_by_tag_name("tr")
+        table = self.driver.find_element_by_xpath("//*[starts-with(@class, 'SearchResult-module__list___')]")
+        lines = table.find_elements_by_xpath("//*[starts-with(@class, 'SearchResult-module__body___')]")
 
         print("Found {} data.".format(len(lines)))
         if progress:
@@ -383,20 +383,14 @@ class ZaimCrawler:
 
         data = []
         for line in reversed(lines):
-            items = line.find_elements_by_tag_name("td")
+            items = line.find_elements_by_tag_name("div")
 
             item = {}
             item["id"] = (
                 items[0]
-                .find_element_by_tag_name("a")
+                .find_element_by_tag_name("i")
                 .get_attribute("data-url")
                 .split("/")[2]
-            )
-            item["type"] = (
-                items[1]
-                .find_element_by_tag_name("a")
-                .get_attribute("class")
-                .split(" ")[1]
             )
             item["count"] = (
                 items[1]
@@ -411,16 +405,19 @@ class ZaimCrawler:
             item["category"] = (
                 items[3].find_element_by_tag_name("span").get_attribute("data-title")
             )
-            item["genre"] = items[3].find_element_by_tag_name("a").text
-            item["amount"] = int(items[4].text.strip("¥").replace(",", ""))
+            item["genre"] = items[3].find_element_by_xpath("//*[starts-with(@class, 'SearchResult-module__link___')]").text
+            item["amount"] = int(items[4].find_element_by_tag_name("span").text.strip("¥").replace(",", ""))
             m_from = items[5].find_elements_by_tag_name("img")
             if len(m_from) != 0:
                 item["from_account"] = m_from[0].get_attribute("data-title")
             m_to = items[6].find_elements_by_tag_name("img")
             if len(m_to) != 0:
                 item["to_account"] = m_to[0].get_attribute("data-title")
+            item["type"] = (
+                "transfer" if "from_account" in item and "to_account" in item else "payment" if "from_account" in item else "income" if "to_account" in item else None
+            )
             item["place"] = (
-                items[7].find_element_by_tag_name("span").get_attribute("title")
+                items[7].find_element_by_tag_name("span").text
             )
             item["name"] = (
                 items[8].find_element_by_tag_name("span").get_attribute("title")
