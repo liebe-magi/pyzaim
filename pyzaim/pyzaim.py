@@ -405,7 +405,7 @@ class ZaimCrawler:
             item["category"] = (
                 items[3].find_element_by_tag_name("span").get_attribute("data-title")
             )
-            item["genre"] = items[3].find_element_by_xpath("//*[starts-with(@class, 'SearchResult-module__link___')]").text
+            item["genre"] = items[3].find_elements_by_tag_name("span")[1].text
             item["amount"] = int(items[4].find_element_by_tag_name("span").text.strip("¥").replace(",", ""))
             m_from = items[5].find_elements_by_tag_name("img")
             if len(m_from) != 0:
