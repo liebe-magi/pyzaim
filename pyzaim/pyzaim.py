@@ -352,7 +352,7 @@ class ZaimCrawler:
             options.add_argument("--headless")
         if headless:
             options.add_argument("--headless")
-        if driver_path is "remote":  # リモート接続も可能（docker-seleniumの利用を想定）
+        if driver_path == 'remote':  # リモート接続も可能（docker-seleniumの利用を想定）
             self.driver = Remote(
                 command_executor='http://localhost:4444/wd/hub',
                 desired_capabilities=options.to_capabilities(),
@@ -399,8 +399,10 @@ class ZaimCrawler:
             loop = self.crawler(pbar, year, progress)
 
         if progress:
+            pbar.update(self.current)
             pbar.close()
-        return self.data
+
+        return reversed(self.data)
 
     def close(self):
         self.driver.close()
@@ -459,11 +461,11 @@ class ZaimCrawler:
             )
             item["name"] = (
                 items[8].find_element_by_tag_name(
-                    "span").get_attribute("title")
+                    "span").text
             )
             item["comment"] = (
                 items[9].find_element_by_tag_name(
-                    "span").get_attribute("title")
+                    "span").text
             )
             self.data.append(item)
             tmp_day = item["date"].day
