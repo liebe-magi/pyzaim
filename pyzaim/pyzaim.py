@@ -1,8 +1,9 @@
 import datetime
 import time
+import calendar
 
 from requests_oauthlib import OAuth1Session
-from selenium.webdriver import Chrome, ChromeOptions
+from selenium.webdriver import Chrome, ChromeOptions, Remote
 from selenium.webdriver.common.keys import Keys
 from tqdm import tqdm
 
@@ -351,7 +352,13 @@ class ZaimCrawler:
             options.add_argument("--headless")
         if headless:
             options.add_argument("--headless")
-        if driver_path is not None:
+        if driver_path == 'remote':  # リモート接続も可能（docker-seleniumの利用を想定）
+            self.driver = Remote(
+                command_executor='http://localhost:4444/wd/hub',
+                desired_capabilities=options.to_capabilities(),
+                options=options,
+            )
+        elif driver_path is not None:
             self.driver = Chrome(executable_path=driver_path, options=options)
         else:
             self.driver = Chrome(options=options)
@@ -364,25 +371,49 @@ class ZaimCrawler:
         time.sleep(1)
 
         self.driver.find_element_by_id("UserEmail").send_keys(user_id)
-        self.driver.find_element_by_id("UserPassword").send_keys(password, Keys.ENTER)
+        self.driver.find_element_by_id(
+            "UserPassword").send_keys(password, Keys.ENTER)
         time.sleep(1)
         print("Login Success.")
+        self.data = []
+        self.current = 0
 
     def get_data(self, year, month, progress=True):
+        day_len = calendar.monthrange(int(year), int(month))[1]
+        year = str(year)
         month = str(month).zfill(2)
         print("Get Data of {}/{}.".format(year, month))
-        self.driver.get("https://zaim.net/money?month={}{}".format(year, month))
+        self.driver.get(
+            "https://zaim.net/money?month={}{}".format(year, month))
         time.sleep(1)
 
-        table = self.driver.find_element_by_xpath("//*[starts-with(@class, 'SearchResult-module__list___')]")
-        lines = table.find_elements_by_xpath("//*[starts-with(@class, 'SearchResult-module__body___')]")
-
-        print("Found {} data.".format(len(lines)))
+        # プログレスバーのゴールを対象月の日数にする
+        print("Found {} days in {}/{}.".format(day_len, year, month))
+        self.current = day_len
         if progress:
-            pbar = tqdm(total=len(lines))
+            pbar = tqdm(total=day_len)
 
-        data = []
-        for line in reversed(lines):
+        # データが一画面に収まらない場合には、スクロールして繰り返し読み込みする
+        loop = True
+        while loop:
+            loop = self.crawler(pbar, year, progress)
+
+        if progress:
+            pbar.update(self.current)
+            pbar.close()
+
+        return reversed(self.data)
+
+    def close(self):
+        self.driver.close()
+
+    def crawler(self, pbar, year, progress):
+        table = self.driver.find_element_by_xpath(
+            "//*[starts-with(@class, 'SearchResult-module__list___')]")
+        lines = table.find_elements_by_xpath(
+            "//*[starts-with(@class, 'SearchResult-module__body___')]")
+
+        for line in lines:
             items = line.find_elements_by_tag_name("div")
 
             item = {}
@@ -392,6 +423,13 @@ class ZaimCrawler:
                 .get_attribute("data-url")
                 .split("/")[2]
             )
+
+            # 前ループの読み込み内容と重複がある場合はスキップする
+            flg_duplicate = next(
+                (data["id"] for data in self.data if data["id"] == item["id"]), None)
+            if flg_duplicate:
+                continue
+
             item["count"] = (
                 items[1]
                 .find_element_by_tag_name("i")
@@ -403,10 +441,12 @@ class ZaimCrawler:
                 "{}年{}".format(year, date), "%Y年%m月%d日"
             )
             item["category"] = (
-                items[3].find_element_by_tag_name("span").get_attribute("data-title")
+                items[3].find_element_by_tag_name(
+                    "span").get_attribute("data-title")
             )
             item["genre"] = items[3].find_elements_by_tag_name("span")[1].text
-            item["amount"] = int(items[4].find_element_by_tag_name("span").text.strip("¥").replace(",", ""))
+            item["amount"] = int(items[4].find_element_by_tag_name(
+                "span").text.strip("¥").replace(",", ""))
             m_from = items[5].find_elements_by_tag_name("img")
             if len(m_from) != 0:
                 item["from_account"] = m_from[0].get_attribute("data-title")
@@ -420,17 +460,31 @@ class ZaimCrawler:
                 items[7].find_element_by_tag_name("span").text
             )
             item["name"] = (
-                items[8].find_element_by_tag_name("span").get_attribute("title")
+                items[8].find_element_by_tag_name(
+                    "span").text
             )
             item["comment"] = (
-                items[9].find_element_by_tag_name("span").get_attribute("title")
+                items[9].find_element_by_tag_name(
+                    "span").text
             )
-            data.append(item)
-            if progress:
-                pbar.update(1)
-        if progress:
-            pbar.close()
-        return data
+            self.data.append(item)
+            tmp_day = item["date"].day
 
-    def close(self):
-        self.driver.close()
+            if progress:
+                pbar.update(self.current - tmp_day)
+                self.current = tmp_day
+
+        # 画面をスクロールして、まだ新しい要素が残っている場合はループを繰り返す
+        current_id = lines[0].find_elements_by_tag_name(
+            "div")[0].find_element_by_tag_name("i").get_attribute("data-url").split("/")[2]
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView(true);", lines[len(lines)-1])
+        time.sleep(0.1)
+        next_id = self.driver.find_element_by_xpath(
+            "//*[starts-with(@class, 'SearchResult-module__list___')]").find_elements_by_xpath(
+            "//*[starts-with(@class, 'SearchResult-module__body___')]")[0].find_elements_by_tag_name("div")[0].find_element_by_tag_name("i").get_attribute("data-url").split("/")[2]
+
+        if current_id == next_id:
+            return False
+        else:
+            return True
