@@ -391,23 +391,24 @@ class ZaimCrawler:
         print("Found {} days in {}/{}.".format(day_len, year, month))
         self.current = day_len
         if progress:
-            pbar = tqdm(total=day_len)
+            self.pbar = tqdm(total=day_len)
 
         # データが一画面に収まらない場合には、スクロールして繰り返し読み込みする
         loop = True
         while loop:
-            loop = self.crawler(pbar, year, progress)
+            loop = self.crawler(year, progress)
 
         if progress:
-            pbar.update(self.current)
-            pbar.close()
+            self.pbar.update(self.current)
+            self.pbar.close()
 
         return reversed(self.data)
 
     def close(self):
         self.driver.close()
+        
 
-    def crawler(self, pbar, year, progress):
+    def crawler(self, year, progress):
         table = self.driver.find_element_by_xpath(
             "//*[starts-with(@class, 'SearchResult-module__list___')]")
         lines = table.find_elements_by_xpath(
@@ -471,7 +472,7 @@ class ZaimCrawler:
             tmp_day = item["date"].day
 
             if progress:
-                pbar.update(self.current - tmp_day)
+                self.pbar.update(self.current - tmp_day)
                 self.current = tmp_day
 
         # 画面をスクロールして、まだ新しい要素が残っている場合はループを繰り返す
