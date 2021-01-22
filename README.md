@@ -108,6 +108,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Ponk02"><img src="https://avatars.githubusercontent.com/u/24751394?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ponk02</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=Ponk02" title="Code">💻</a></td>
     <td align="center"><a href="http://zenjiro.wordpress.com/"><img src="https://avatars.githubusercontent.com/u/1298249?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zenjiro</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=zenjiro" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/omatsu555"><img src="https://avatars.githubusercontent.com/u/40729996?v=4?s=100" width="100px;" alt=""/><br /><sub><b>omatsu555</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=omatsu555" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/kagemomiji"><img src="https://avatars.githubusercontent.com/u/5343692?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Y.Tory</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=kagemomiji" title="Code">💻</a></td>
   </tr>
 </table>
 
