@@ -104,7 +104,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://fe-notes.work/"><img src="https://avatars.githubusercontent.com/u/38152917?v=4?s=100" width="100px;" alt=""/><br /><sub><b>reeve0930</b></sub></a><br /><a href="#projectManagement-reeve0930" title="Project Management">📆</a></td>
+    <td align="center"><a href="https://fe-notes.work/"><img src="https://avatars.githubusercontent.com/u/38152917?v=4?s=100" width="100px;" alt=""/><br /><sub><b>reeve0930</b></sub></a><br /><a href="#projectManagement-reeve0930" title="Project Management">📆</a> <a href="https://github.com/reeve0930/pyzaim/pulls?q=is%3Apr+reviewed-by%3Areeve0930" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
