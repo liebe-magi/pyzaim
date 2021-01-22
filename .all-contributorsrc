@@ -25,7 +25,16 @@
       "contributions": [
         "code"
       ]
-    }
+    },
+    {
+      "login": "zenjiro",
+      "name": "zenjiro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1298249?v=4",
+      "profile": "http://zenjiro.wordpress.com/",
+      "contributions": [
+        "code"
+      ]
+    },
   ],
   "contributorsPerLine": 7,
   "projectName": "pyzaim",
