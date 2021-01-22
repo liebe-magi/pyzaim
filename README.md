@@ -1,4 +1,7 @@
 # pyzaim
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [Zaim](https://zaim.net/)のデータを取得・操作するPythonパッケージ
 
@@ -91,3 +94,23 @@ data = crawler.get_data('取得する年(int)', '取得する月(int)', progress
 crawler.close()
 ```
 
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://fe-notes.work/"><img src="https://avatars.githubusercontent.com/u/38152917?v=4?s=100" width="100px;" alt=""/><br /><sub><b>reeve0930</b></sub></a><br /><a href="#projectManagement-reeve0930" title="Project Management">📆</a> <a href="https://github.com/reeve0930/pyzaim/pulls?q=is%3Apr+reviewed-by%3Areeve0930" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/reeve0930/pyzaim/commits?author=reeve0930" title="Code">💻</a> <a href="https://github.com/reeve0930/pyzaim/commits?author=reeve0930" title="Documentation">📖</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
