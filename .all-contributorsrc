@@ -13,7 +13,8 @@
       "contributions": [
         "projectManagement",
         "review",
-        "code"
+        "code",
+        "doc"
       ]
     }
   ],
