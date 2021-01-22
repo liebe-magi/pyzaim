@@ -1,6 +1,6 @@
 # pyzaim
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [Zaim](https://zaim.net/)のデータを取得・操作するPythonパッケージ
@@ -105,6 +105,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://fe-notes.work/"><img src="https://avatars.githubusercontent.com/u/38152917?v=4?s=100" width="100px;" alt=""/><br /><sub><b>reeve0930</b></sub></a><br /><a href="#projectManagement-reeve0930" title="Project Management">📆</a> <a href="https://github.com/reeve0930/pyzaim/pulls?q=is%3Apr+reviewed-by%3Areeve0930" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/reeve0930/pyzaim/commits?author=reeve0930" title="Code">💻</a> <a href="https://github.com/reeve0930/pyzaim/commits?author=reeve0930" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/omatsu555"><img src="https://avatars.githubusercontent.com/u/40729996?v=4?s=100" width="100px;" alt=""/><br /><sub><b>omatsu555</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=omatsu555" title="Code">💻</a></td>
   </tr>
 </table>
 
