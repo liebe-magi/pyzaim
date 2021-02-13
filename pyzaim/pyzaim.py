@@ -1,3 +1,4 @@
+import os
 import datetime
 import time
 import calendar
@@ -342,28 +343,46 @@ class ZaimAPI:
 
 
 class ZaimCrawler:
-    def __init__(self, user_id, password, driver_path=None, headless=False, poor=False):
+    def __init__(self, user_id, password, driver_path=None, headless=False, poor=False, gcf=False):
         options = ChromeOptions()
-        if poor:
-            options.add_argument("--disable-gpu")
-            options.add_argument("--no-sandbox")
-            options.add_argument("--disable-dev-shm-usage")
-            options.add_argument("--remote-debugging-port=9222")
-            options.add_argument("--headless")
-        if headless:
-            options.add_argument("--headless")
-        if driver_path == 'remote':  # リモート接続も可能（docker-seleniumの利用を想定）
-            self.driver = Remote(
-                command_executor='http://localhost:4444/wd/hub',
-                desired_capabilities=options.to_capabilities(),
-                options=options,
-            )
-        elif driver_path is not None:
-            self.driver = Chrome(executable_path=driver_path, options=options)
+
+        if gcf:
+            options.add_argument('--headless')
+            options.add_argument('--disable-gpu')
+            options.add_argument('--window-size=480x270')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--hide-scrollbars')
+            options.add_argument('--enable-logging')
+            options.add_argument('--log-level=0')
+            options.add_argument('--v=99')
+            options.add_argument('--single-process')
+            options.add_argument('--ignore-certificate-errors')
+
+            options.binary_location = os.getcwd() + "/headless-chromium"
+            self.driver = Chrome(
+                os.getcwd() + "/chromedriver", options=options)
         else:
-            self.driver = Chrome(options=options)
-        if poor:
-            self.driver.set_window_size(480, 270)
+            if poor:
+                options.add_argument("--disable-gpu")
+                options.add_argument("--no-sandbox")
+                options.add_argument("--disable-dev-shm-usage")
+                options.add_argument("--remote-debugging-port=9222")
+                options.add_argument("--headless")
+            if headless:
+                options.add_argument("--headless")
+            if driver_path == 'remote':  # リモート接続も可能（docker-seleniumの利用を想定）
+                self.driver = Remote(
+                    command_executor='http://localhost:4444/wd/hub',
+                    desired_capabilities=options.to_capabilities(),
+                    options=options,
+                )
+            elif driver_path is not None:
+                self.driver = Chrome(
+                    executable_path=driver_path, options=options)
+            else:
+                self.driver = Chrome(options=options)
+            if poor:
+                self.driver.set_window_size(480, 270)
         print("Start Chrome Driver.")
         print("Login to Zaim.")
 
@@ -406,7 +425,6 @@ class ZaimCrawler:
 
     def close(self):
         self.driver.close()
-        
 
     def crawler(self, year, progress):
         table = self.driver.find_element_by_xpath(
