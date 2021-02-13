@@ -345,6 +345,7 @@ class ZaimAPI:
 class ZaimCrawler:
     def __init__(self, user_id, password, driver_path=None, headless=False, poor=False, gcf=False):
         options = ChromeOptions()
+
         if gcf:
             options.add_argument('--headless')
             options.add_argument('--disable-gpu')
@@ -360,7 +361,6 @@ class ZaimCrawler:
             options.binary_location = os.getcwd() + "/headless-chromium"
             self.driver = Chrome(
                 os.getcwd() + "/chromedriver", options=options)
-
         else:
             if poor:
                 options.add_argument("--disable-gpu")

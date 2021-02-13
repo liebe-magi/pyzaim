@@ -1,0 +1,63 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "reeve0930",
+      "name": "reeve0930",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38152917?v=4",
+      "profile": "https://fe-notes.work/",
+      "contributions": [
+        "projectManagement",
+        "review",
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "Ponk02",
+      "name": "Ponk02",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24751394?v=4",
+      "profile": "https://github.com/Ponk02",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "zenjiro",
+      "name": "zenjiro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1298249?v=4",
+      "profile": "http://zenjiro.wordpress.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "omatsu555",
+      "name": "omatsu555",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40729996?v=4",
+      "profile": "https://github.com/omatsu555",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "kagemomiji",
+      "name": "Y.Tory",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5343692?v=4",
+      "profile": "https://github.com/kagemomiji",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "pyzaim",
+  "projectOwner": "reeve0930",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
