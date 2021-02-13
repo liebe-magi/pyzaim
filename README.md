@@ -1,6 +1,6 @@
 # pyzaim
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [Zaim](https://zaim.net/)のデータを取得・操作するPythonパッケージ
@@ -109,6 +109,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://zenjiro.wordpress.com/"><img src="https://avatars.githubusercontent.com/u/1298249?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zenjiro</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=zenjiro" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/omatsu555"><img src="https://avatars.githubusercontent.com/u/40729996?v=4?s=100" width="100px;" alt=""/><br /><sub><b>omatsu555</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=omatsu555" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/kagemomiji"><img src="https://avatars.githubusercontent.com/u/5343692?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Y.Tory</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=kagemomiji" title="Code">💻</a></td>
+    <td align="center"><a href="https://knoow.jp/@/Omatsu?preview"><img src="https://avatars.githubusercontent.com/u/7794917?v=4?s=100" width="100px;" alt=""/><br /><sub><b>o-matsu</b></sub></a><br /><a href="https://github.com/reeve0930/pyzaim/commits?author=o-matsu" title="Code">💻</a></td>
   </tr>
 </table>
 
