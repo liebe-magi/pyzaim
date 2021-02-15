@@ -3,6 +3,8 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+![logo](/img/pyzaim.svg)
+
 [Zaim](https://zaim.net/)のデータを取得・操作するPythonパッケージ
 
 ## 概要
@@ -94,6 +96,25 @@ data = crawler.get_data('取得する年(int)', '取得する月(int)', progress
 crawler.close()
 ```
 
+## ブランチの運用について
+
+本リポジトリのブランチについては以下の運用といたします。
+
+`master`
+- リリース用ブランチ。
+- このブランチにマージした時点で新たにタグを打ち、PyPIにアップロードします。
+- **このブランチには直接PRを出さないでください。**
+
+`develop`
+- 開発用の常駐ブランチ。
+- すべてのコミットはこのブランチに一度マージし、動作を確認した上でmasterにマージします。
+- PRはこのブランチに対して行ってください。
+
+`feature-*`
+- 新規開発用のブランチ。
+- 必ずdevelopから分岐し、developにマージする。
+- `*`には開発やバグ修正などの対応内容を簡潔に記入。
+  - 例: feature-add-headless-mode
 
 ## Contributors ✨
 
