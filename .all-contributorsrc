@@ -6,15 +6,12 @@
   "commit": false,
   "contributors": [
     {
-      "login": "reeve0930",
-      "name": "reeve0930",
+      "login": "MagicalLiebe",
+      "name": "りーべ",
       "avatar_url": "https://avatars.githubusercontent.com/u/38152917?v=4",
-      "profile": "https://fe-notes.work/",
+      "profile": "https://hackfront.dev",
       "contributions": [
-        "projectManagement",
-        "review",
-        "code",
-        "doc"
+        "projectManagement"
       ]
     },
     {
@@ -61,18 +58,9 @@
       "contributions": [
         "code"
       ]
-    },
-    {
-      "login": "MagicalLiebe",
-      "name": "りーべ",
-      "avatar_url": "https://avatars.githubusercontent.com/u/38152917?v=4",
-      "profile": "https://hackfront.dev",
-      "contributions": [
-        "projectManagement"
-      ]
     }
   ],
-  "contributorsPerLine": 7,
+  "contributorsPerLine": 6,
   "projectName": "pyzaim",
   "projectOwner": "MagicalLiebe",
   "repoType": "github",
