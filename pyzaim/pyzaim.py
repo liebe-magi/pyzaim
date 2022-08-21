@@ -78,8 +78,8 @@ class ZaimAPI:
     def verify(self):
         return self.auth.get(self.verify_url).json()
 
-    def get_data(self):
-        return self.auth.get(self.money_url).json()["money"]
+    def get_data(self, params=None):
+        return self.auth.get(self.money_url, params=params).json()["money"]
 
     def insert_payment_simple(
         self,
