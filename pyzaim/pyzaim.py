@@ -386,12 +386,12 @@ class ZaimCrawler:
         print("Start Chrome Driver.")
         print("Login to Zaim.")
 
-        self.driver.get("https://auth.zaim.net/")
+        self.driver.get("https://id.zaim.net/")
         time.sleep(1)
 
-        self.driver.find_element_by_id("UserEmail").send_keys(user_id)
+        self.driver.find_element_by_id("email_or_id").send_keys(user_id)
         self.driver.find_element_by_id(
-            "UserPassword").send_keys(password, Keys.ENTER)
+            "password").send_keys(password, Keys.ENTER)
         time.sleep(1)
         print("Login Success.")
         self.data = []
