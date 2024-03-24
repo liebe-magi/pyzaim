@@ -2,10 +2,10 @@
 name = "pyzaim"
 version = "1.0.11"
 description = "Zaimのデータを取得・操作するPythonパッケージ"
-authors = ["reeve0930 <reeve0930@gmail.com>"]
+authors = ["liebe-magi <liebe.magi@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/reeve0930/pyzaim"
+repository = "https://github.com/liebe-magi/pyzaim"
 keywords = ["zaim", "oauth", "rest api", "selenium", "chromedriver"]
 classifiers=[
     "License :: OSI Approved :: MIT License",

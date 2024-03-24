@@ -6,7 +6,7 @@
   "commit": false,
   "contributors": [
     {
-      "login": "MagicalLiebe",
+      "login": "liebe-magi",
       "name": "りーべ",
       "avatar_url": "https://avatars.githubusercontent.com/u/38152917?v=4",
       "profile": "https://hackfront.dev",
@@ -32,7 +32,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/1298249?v=4",
       "profile": "http://zenjiro.wordpress.com/",
       "contributions": [
-        "code"
+        "code",
+        "review"
       ]
     },
     {
@@ -74,8 +75,10 @@
   ],
   "contributorsPerLine": 6,
   "projectName": "pyzaim",
-  "projectOwner": "MagicalLiebe",
+  "projectOwner": "liebe-magi",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs",
+  "commitConvention": "angular"
 }
