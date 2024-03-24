@@ -1,10 +1,12 @@
-import os
-import datetime
-import time
 import calendar
+import datetime
+import os
+import time
 
 from requests_oauthlib import OAuth1Session
 from selenium.webdriver import Chrome, ChromeOptions, Remote
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from tqdm import tqdm
 
@@ -343,24 +345,25 @@ class ZaimAPI:
 
 
 class ZaimCrawler:
-    def __init__(self, user_id, password, driver_path=None, headless=False, poor=False, gcf=False):
+    def __init__(
+        self, user_id, password, driver_path=None, headless=False, poor=False, gcf=False
+    ):
         options = ChromeOptions()
 
         if gcf:
-            options.add_argument('--headless')
-            options.add_argument('--disable-gpu')
-            options.add_argument('--window-size=480x270')
-            options.add_argument('--no-sandbox')
-            options.add_argument('--hide-scrollbars')
-            options.add_argument('--enable-logging')
-            options.add_argument('--log-level=0')
-            options.add_argument('--v=99')
-            options.add_argument('--single-process')
-            options.add_argument('--ignore-certificate-errors')
+            options.add_argument("--headless")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--window-size=480x270")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--hide-scrollbars")
+            options.add_argument("--enable-logging")
+            options.add_argument("--log-level=0")
+            options.add_argument("--v=99")
+            options.add_argument("--single-process")
+            options.add_argument("--ignore-certificate-errors")
 
             options.binary_location = os.getcwd() + "/headless-chromium"
-            self.driver = Chrome(
-                os.getcwd() + "/chromedriver", options=options)
+            self.driver = Chrome(os.getcwd() + "/chromedriver", options=options)
         else:
             if poor:
                 options.add_argument("--disable-gpu")
@@ -370,15 +373,17 @@ class ZaimCrawler:
                 options.add_argument("--headless")
             if headless:
                 options.add_argument("--headless")
-            if driver_path == 'remote':  # リモート接続も可能（docker-seleniumの利用を想定）
+            if (
+                driver_path == "remote"
+            ):  # リモート接続も可能（docker-seleniumの利用を想定）
+                options.set_capability("pageLoadStrategy", "eager")
                 self.driver = Remote(
-                    command_executor='http://localhost:4444/wd/hub',
-                    desired_capabilities=options.to_capabilities(),
+                    command_executor="http://localhost:4444/wd/hub",
                     options=options,
                 )
             elif driver_path is not None:
-                self.driver = Chrome(
-                    executable_path=driver_path, options=options)
+                service = Service(driver_path)
+                self.driver = Chrome(service=service, options=options)
             else:
                 self.driver = Chrome(options=options)
             if poor:
@@ -389,9 +394,8 @@ class ZaimCrawler:
         self.driver.get("https://id.zaim.net/")
         time.sleep(1)
 
-        self.driver.find_element_by_id("email_or_id").send_keys(user_id)
-        self.driver.find_element_by_id(
-            "password").send_keys(password, Keys.ENTER)
+        self.driver.find_element(value="email_or_id").send_keys(user_id)
+        self.driver.find_element(value="password").send_keys(password, Keys.ENTER)
         time.sleep(1)
         print("Login Success.")
         self.data = []
@@ -402,8 +406,7 @@ class ZaimCrawler:
         year = str(year)
         month = str(month).zfill(2)
         print("Get Data of {}/{}.".format(year, month))
-        self.driver.get(
-            "https://zaim.net/money?month={}{}".format(year, month))
+        self.driver.get("https://zaim.net/money?month={}{}".format(year, month))
         time.sleep(1)
 
         # プログレスバーのゴールを対象月の日数にする
@@ -427,31 +430,36 @@ class ZaimCrawler:
         self.driver.close()
 
     def crawler(self, year, progress):
-        table = self.driver.find_element_by_xpath(
-            "//*[starts-with(@class, 'SearchResult-module__list___')]")
-        lines = table.find_elements_by_xpath(
-            "//*[starts-with(@class, 'SearchResult-module__body___')]")
+        table = self.driver.find_element(
+            by=By.XPATH,
+            value="//*[starts-with(@class, 'SearchResult-module__list___')]",
+        )
+        lines = table.find_elements(
+            by=By.XPATH,
+            value="//*[starts-with(@class, 'SearchResult-module__body___')]",
+        )
 
         for line in lines:
-            items = line.find_elements_by_tag_name("div")
+            items = line.find_elements(by=By.TAG_NAME, value="div")
 
             item = {}
             item["id"] = (
                 items[0]
-                .find_element_by_tag_name("i")
+                .find_element(by=By.TAG_NAME, value="i")
                 .get_attribute("data-url")
                 .split("/")[2]
             )
 
             # 前ループの読み込み内容と重複がある場合はスキップする
             flg_duplicate = next(
-                (data["id"] for data in self.data if data["id"] == item["id"]), None)
+                (data["id"] for data in self.data if data["id"] == item["id"]), None
+            )
             if flg_duplicate:
                 continue
 
             item["count"] = (
                 items[1]
-                .find_element_by_tag_name("i")
+                .find_element(by=By.TAG_NAME, value="i")
                 .get_attribute("title")
                 .split("（")[0]
             )
@@ -460,32 +468,35 @@ class ZaimCrawler:
                 "{}年{}".format(year, date), "%Y年%m月%d日"
             )
             item["category"] = (
-                items[3].find_element_by_tag_name(
-                    "span").get_attribute("data-title")
+                items[3]
+                .find_element(by=By.TAG_NAME, value="span")
+                .get_attribute("data-title")
             )
-            item["genre"] = items[3].find_elements_by_tag_name("span")[1].text
-            item["amount"] = int(items[4].find_element_by_tag_name(
-                "span").text.strip("¥").replace(",", ""))
-            m_from = items[5].find_elements_by_tag_name("img")
+            item["genre"] = items[3].find_elements(by=By.TAG_NAME, value="span")[1].text
+            item["amount"] = int(
+                items[4]
+                .find_element(by=By.TAG_NAME, value="span")
+                .text.strip("¥")
+                .replace(",", "")
+            )
+            m_from = items[5].find_elements(by=By.TAG_NAME, value="img")
             if len(m_from) != 0:
                 item["from_account"] = m_from[0].get_attribute("data-title")
-            m_to = items[6].find_elements_by_tag_name("img")
+            m_to = items[6].find_elements(by=By.TAG_NAME, value="img")
             if len(m_to) != 0:
                 item["to_account"] = m_to[0].get_attribute("data-title")
             item["type"] = (
-                "transfer" if "from_account" in item and "to_account" in item else "payment" if "from_account" in item else "income" if "to_account" in item else None
+                "transfer"
+                if "from_account" in item and "to_account" in item
+                else (
+                    "payment"
+                    if "from_account" in item
+                    else "income" if "to_account" in item else None
+                )
             )
-            item["place"] = (
-                items[7].find_element_by_tag_name("span").text
-            )
-            item["name"] = (
-                items[8].find_element_by_tag_name(
-                    "span").text
-            )
-            item["comment"] = (
-                items[9].find_element_by_tag_name(
-                    "span").text
-            )
+            item["place"] = items[7].find_element(by=By.TAG_NAME, value="span").text
+            item["name"] = items[8].find_element(by=By.TAG_NAME, value="span").text
+            item["comment"] = items[9].find_element(by=By.TAG_NAME, value="span").text
             self.data.append(item)
             tmp_day = item["date"].day
 
@@ -494,14 +505,31 @@ class ZaimCrawler:
                 self.current = tmp_day
 
         # 画面をスクロールして、まだ新しい要素が残っている場合はループを繰り返す
-        current_id = lines[0].find_elements_by_tag_name(
-            "div")[0].find_element_by_tag_name("i").get_attribute("data-url").split("/")[2]
+        current_id = (
+            lines[0]
+            .find_elements(by=By.TAG_NAME, value="div")[0]
+            .find_element(by=By.TAG_NAME, value="i")
+            .get_attribute("data-url")
+            .split("/")[2]
+        )
         self.driver.execute_script(
-            "arguments[0].scrollIntoView(true);", lines[len(lines)-1])
+            "arguments[0].scrollIntoView(true);", lines[len(lines) - 1]
+        )
         time.sleep(0.1)
-        next_id = self.driver.find_element_by_xpath(
-            "//*[starts-with(@class, 'SearchResult-module__list___')]").find_elements_by_xpath(
-            "//*[starts-with(@class, 'SearchResult-module__body___')]")[0].find_elements_by_tag_name("div")[0].find_element_by_tag_name("i").get_attribute("data-url").split("/")[2]
+        next_id = (
+            self.driver.find_element(
+                by=By.XPATH,
+                value="//*[starts-with(@class, 'SearchResult-module__list___')]",
+            )
+            .find_elements(
+                by=By.XPATH,
+                value="//*[starts-with(@class, 'SearchResult-module__body___')]",
+            )[0]
+            .find_elements(by=By.TAG_NAME, value="div")[0]
+            .find_element(by=By.TAG_NAME, value="i")
+            .get_attribute("data-url")
+            .split("/")[2]
+        )
 
         if current_id == next_id:
             return False
