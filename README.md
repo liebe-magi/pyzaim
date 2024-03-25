@@ -4,7 +4,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-![logo](/img/pyzaim.svg)
+![logo](https://raw.githubusercontent.com/liebe-magi/pyzaim/main/img/pyzaim.svg)
 
 [Zaim](https://zaim.net/)のデータを取得・操作するPythonパッケージ
 
